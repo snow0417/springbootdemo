@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    master:
+      driverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://39.105.185.187:3306/master_test
+      username: root
+      password: 123456
+    slave:
+      driverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://39.105.185.187:3306/slave_test
+      username: root
+      password: 123456
