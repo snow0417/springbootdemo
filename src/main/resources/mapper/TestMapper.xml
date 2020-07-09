@@ -11,4 +11,10 @@
     <select id="selectReadById" resultType="com.example.demo.Model.TestEntity">
         select * from test where id = #{id}
     </select>
+    <update id="update">
+        update test set name = #{name} where id = #{id}
+    </update>
+    <select id="selectByIdForUpdate" resultMap="BaseMap">
+        select * from test where id = #{id} for update
+    </select>
 </mapper>

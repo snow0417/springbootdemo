@@ -1,5 +1,10 @@
 package com.example.demo;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * @author xueyu
  * @date 2020/5/21 14:43
@@ -8,49 +13,35 @@ public class Client {
     private static Object o = new Object();
 
     public static void main(String[] args) throws Exception {
-        Thread t1 = new Thread(() -> {
-            synchronized (o) {
-                System.out.println("1111");
-                try {
-                    Thread.sleep(2000);
-                    o.notify();
-                    System.out.println("1 wait...");
-                    o.wait();
-                }catch (Exception e){
+        int[] s = new int[1];
+        Queue<Integer> q = new LinkedList<>();
+        q.add(1);
+        q.add(2);
 
-                }
-                System.out.println("1 end...");
-            }
-        });
+        Integer p = q.peek();
+        Integer poll = q.poll();
+        Integer r = q.remove();
 
-        Thread t2 = new Thread(() -> {
-            synchronized (o) {
-                try {
-                    o.wait();
-                    System.out.println("222");
-                }catch (Exception e){
-
-                }
-            }
-        });
-
-        Thread t3 = new Thread(() -> {
-            synchronized (o) {
-                try {
-                    o.wait();
-                    System.out.println("333");
-                }catch (Exception e){
-
-                }
-            }
-        });
-
-
-        t2.start();
-        t3.start();
-        Thread.sleep(1000);
-        t1.start();
-
-        Thread.sleep(10000);
+        q.offer(23);
+        q.offer(233);
     }
+
+    public static int[] divingBoard(int shorter, int longer, int k) {
+        if(k == 0){
+            return new int[0];
+        }
+
+        Set<Integer> set = new TreeSet();
+        for(int i = 0; i <= k; k--){
+            set.add(shorter * (k-i) + i * longer);
+        }
+        int[] res = new int[set.size()];
+        int i = 0;
+        for(Integer val : set){
+            res[i++] = val;
+        }
+
+        return res;
+    }
+
 }

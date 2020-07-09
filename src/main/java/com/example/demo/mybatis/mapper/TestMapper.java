@@ -11,6 +11,10 @@ import org.apache.ibatis.annotations.Param;
 public interface TestMapper {
     TestEntity selectById(@Param("id") Integer id);
 
+    TestEntity selectByIdForUpdate(@Param("id") Integer id);
+
+    void update(@Param("id") Integer id, @Param("name")String name);
+
     @DS("slave")
     TestEntity selectReadById(@Param("id")Integer id);
 }
