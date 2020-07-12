@@ -1,6 +1,7 @@
 package com.example.demo.sort;
 
 /**
+ * 快速排序
  * @author xueyu
  * @date 2020/6/3 18:40
  */
