@@ -39,6 +39,11 @@ public class OddEven {
     }
 
 
+
+
+
+
+
     public static class ZeroEvenOdd {
         private int n;
 
