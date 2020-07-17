@@ -12,7 +12,6 @@ import java.util.UUID;
  */
 public class Client {
 
-·
     public static void main(String[] args) {
         Map<String, Object> map = new HashMap<>();
         map.put("country_tele_code", "+86");
