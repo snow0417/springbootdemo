@@ -11,7 +11,6 @@ import java.util.UUID;
  * @date 2020/5/21 14:43
  */
 public class Client {
-    master
     /**
      *
      * @param args

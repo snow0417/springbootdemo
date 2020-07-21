@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  * @date 2020/6/30 18:34
  */
 public interface TestMapper {
-    TestEntity selectById(@Param("id") Integer id);
+    TestEntity selectById(@Param("id") Integer id, @Param("table")String table);
 
     TestEntity selectByIdForUpdate(@Param("id") Integer id);
 

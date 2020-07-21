@@ -6,10 +6,10 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
     </resultMap>
     <select id="selectById" resultType="com.example.demo.Model.TestEntity">
-        select * from test where id = #{id}
+        select * from ${table} where id = #{id}
     </select>
     <select id="selectReadById" resultType="com.example.demo.Model.TestEntity">
-        select * from test where id = #{id}
+        select * from test where id = ${id}
     </select>
     <update id="update">
         update test set name = #{name} where id = #{id}
