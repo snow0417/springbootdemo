@@ -16,6 +16,8 @@ public class StudentProxyHandler implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("start ....");
+        System.out.println(proxy.getClass().getName());
+        Class[] inter = proxy.getClass().getInterfaces();
         student.study();
         System.out.println("end....");
         return null;
