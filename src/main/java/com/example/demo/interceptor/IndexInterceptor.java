@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class IndexInterceptor implements HandlerInterceptor {
 
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("index interceptor");
         return true;
