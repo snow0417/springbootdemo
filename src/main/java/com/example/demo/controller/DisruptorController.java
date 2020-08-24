@@ -25,16 +25,20 @@ public class DisruptorController {
 
     @GetMapping("/test")
     public String test(String user, String content) {
-        long sequence = disruptor.getRingBuffer().next();
-        MsEvent event = disruptor.getRingBuffer().get(sequence);
-        event.setName(user);
-        event.setContent(content);
-        disruptor.getRingBuffer().publish(sequence);
+
+        for (int i = 0; i < 100; i++) {
+            long sequence = disruptor.getRingBuffer().next();
+            MsEvent event = disruptor.getRingBuffer().get(sequence);
+            event.setName(user);
+            event.setContent(content + i);
+            disruptor.getRingBuffer().publish(sequence);
+        }
+
         return "ok";
     }
 
     @GetMapping("/send")
-    public String send() throws Exception{
+    public String send() throws Exception {
         for (int i = 0; i < 10; i++) {
             Request request = new Request.Builder().get().url("http://localhost:8080/disruptor/test?user=xueyu&content=test" + i).build();
             Response response = okHttpClient.newCall(request).execute();

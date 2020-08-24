@@ -7,15 +7,16 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * @author xueyu
  * @date 2020/8/19 11:37
  */
 public class NettyServer {
-    public static void main(String[] args) throws Exception {
+    //10M
+    private static final int TCP_BAG_LENGTH = 10_485_760;
+
+    public static void main(String[] args) {
         start();
     }
 
@@ -27,8 +28,11 @@ public class NettyServer {
         serverBootstrap.group(eventLoopGroup, worker).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
             @Override
             protected void initChannel(SocketChannel socketChannel) {
-                socketChannel.pipeline().addLast(new StringDecoder());
-                socketChannel.pipeline().addLast(new StringEncoder());
+
+                //server 端从上往下一次执行decoder
+                socketChannel.pipeline().addLast(new ServerDecoder());
+
+                //字符串解码器
                 socketChannel.pipeline().addLast(new ServerChannelHandler());
             }
         });
