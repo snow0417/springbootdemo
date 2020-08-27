@@ -1,5 +1,6 @@
 package com.example.demo.mybatis.config;
 
+import com.example.demo.mybatis.TestPlugin;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,21 +24,29 @@ import java.util.Map;
 @Configuration
 @MapperScan(basePackages = "com.example.demo.mybatis.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
 public class MybatisConfig {
+    public final static String MASTER = "master";
+    public final static String SLAVE = "slave";
+    public static Map<String, DataSource> dataSourceMap = new HashMap<>(4);
+
     @Bean
     @ConfigurationProperties("spring.datasource.master")
     public DataSource masterDataSource() {
-        return DataSourceBuilder.create().build();
+        DataSource dataSource = DataSourceBuilder.create().build();
+        dataSourceMap.put("master", dataSource);
+        return dataSource;
     }
 
     @Bean
     @ConfigurationProperties("spring.datasource.slave")
     public DataSource slaveDataSource() {
-        return DataSourceBuilder.create().build();
+        DataSource dataSource = DataSourceBuilder.create().build();
+        dataSourceMap.put("slave", dataSource);
+        return dataSource;
     }
 
     @Bean
     public DataSource routingDataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
-                                          @Qualifier("slaveDataSource") DataSource slave1DataSource) {
+                                        @Qualifier("slaveDataSource") DataSource slave1DataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DBTypeEnum.MASTER, masterDataSource);
         targetDataSources.put(DBTypeEnum.SLAVE, slave1DataSource);
@@ -52,6 +61,7 @@ public class MybatisConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        sqlSessionFactoryBean.setPlugins(new TestPlugin());
         return sqlSessionFactoryBean.getObject();
     }
 

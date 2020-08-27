@@ -21,20 +21,20 @@ public class DataSourceAop {
 
     @Around("dsPointcut()")
     public Object around(ProceedingJoinPoint proceedingJoinPoint) {
-        DS ds = ((MethodSignature)proceedingJoinPoint.getSignature()).getMethod().getAnnotation(DS.class);
+        DS ds = ((MethodSignature) proceedingJoinPoint.getSignature()).getMethod().getAnnotation(DS.class);
         try {
-            if (ds.value().equals("master")) {
-                DbContextHolder.master();
-            } else if (ds.value().equals("slave")) {
+            if (ds.value().equals(MybatisConfig.SLAVE)) {
                 DbContextHolder.slave();
+            } else if (ds.value().equals(MybatisConfig.MASTER)) {
+                DbContextHolder.master();
             }
             return proceedingJoinPoint.proceed();
         } catch (Throwable e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            //防止内存溢出
+            DbContextHolder.remove();
         }
         return null;
-
-
     }
 }
