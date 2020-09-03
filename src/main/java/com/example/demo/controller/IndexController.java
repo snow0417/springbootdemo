@@ -3,8 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.Model.TestEntity;
 import com.example.demo.mybatis.mapper.TestMapper;
 import com.example.demo.service.TestService;
+import com.example.demo.spring.bean.TestBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +21,10 @@ public class IndexController {
     private TestMapper testMapper;
     @Autowired
     private TestService testService;
+    @Autowired
+    private TestBean testBean;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @GetMapping("/read")
     public void testRead() throws Exception{
